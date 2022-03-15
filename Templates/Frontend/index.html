@@ -1,0 +1,34 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Tante</title>
+        <link rel="stylesheet" href="{% static 'Frontend/CSS/index.css' %}">
+    </head>
+    <body>
+        <header>
+            <a class="headLogo" href="/">
+                <img src="{% static 'Frontend/IMG/logo.png' %}" alt="BedrijfsLogo">
+            </a>
+            <div class="burger" onclick="nav();">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+            <div id="navList" class="nav">
+                    <a href="/" {% if request.get_full_path == "/" %} class="currentPage" {% else %} class="navLink" {% endif %} >Home</a>
+                    <a href="/contact" {% if request.get_full_path == "/contact" %} class="currentPage" {% else %} class="navLink" {% endif %} >Contact</a>
+                    <a href="/create" {% if request.get_full_path == "/create" %} class="currentPage" {% else %} class="navLink" {% endif %} >Create</a>
+                    <a href="/login" {% if request.get_full_path == "/login" %} class="currentPage" {% else %} class="navLink" {% endif %} >Login</a>
+                    <a href="/admin" {% if request.get_full_path == "/admin" %} class="currentPage" {% else %} class="navLink" {% endif %} >Admin</a>
+            </div>
+        </header>
+
+        {% include page %}
+
+    </body>
+    <script src="{% static 'Frontend/JS/index.js' %}"></script>
+</html>

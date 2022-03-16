@@ -1,0 +1,13 @@
+{% load static %}
+
+<div class="main">
+
+    <!-- Specify fields to be displayed -->
+    {{ data.title }}<br/>
+    {{ data.description }}<br/>
+
+</div>
+<br>
+<a href="{{ data.id }}/update">Update item</a> <br/>
+<a href="{{ data.id }}/delete">delete item</a> <br/>
+<a href="/list" {% if request.get_full_path == "/list" %} class="currentPage" {% else %} class="navLink" {% endif %} >Go Back</a>

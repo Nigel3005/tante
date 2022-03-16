@@ -1,0 +1,13 @@
+{% load static %}
+
+<div class="main">
+
+    {% for data in dataset %}
+        <a href="/{{ data.id }}">
+            {{ data.title }}<br/>
+            {{ data.description }}<br/>
+            <hr/>
+        </a>
+    {% endfor %}
+  <a href="/create" {% if request.get_full_path == "/create" %} class="currentPage" {% else %} class="navLink" {% endif %} >Go back</a>
+</div>

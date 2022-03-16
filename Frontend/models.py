@@ -17,10 +17,14 @@ class contact(models.Model):
 class GeeksModel(models.Model):
 
     # fields of the model
-    title = models.CharField(max_length = 200)
-    description = models.TextField()
+    # id(models.AutoField(primary_key=True))
+    title = models.CharField(max_length=200)
+    description = models.TextField(max_length=200)
 
     # renames the instances of the model
     # with their title name
     def __str__(self):
         return self.title
+
+    class Meta:
+        verbose_name_plural = "Geeks"

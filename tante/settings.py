@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     # Downloads
     'user_visit',
+    'bootstrap5',
 
     # Own
     'Frontend',
@@ -84,6 +85,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+        # 'NAME': str(BASE_DIR / 'db.sqlite3'),
     }
 }
 
@@ -125,6 +127,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static'] #ONS
 STATIC_ROOT = BASE_DIR / 'staticfiles' #DJANGO
+
+
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

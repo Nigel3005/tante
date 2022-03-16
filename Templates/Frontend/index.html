@@ -1,5 +1,15 @@
 {% load static %}
 
+{# Load the tag library #}
+{#{% load bootstrap5 %}#}
+
+{# Load CSS and JavaScript #}
+{#{% bootstrap_css %}#}
+{#{% bootstrap_javascript %}#}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{#{% bootstrap_messages %}#}
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -10,20 +20,28 @@
     </head>
     <body>
         <header>
-            <a class="headLogo" href="/">
-                <img src="{% static 'Frontend/IMG/logo.png' %}" alt="BedrijfsLogo">
-            </a>
-            <div class="burger" onclick="nav();">
-                <div class="line"></div>
-                <div class="line"></div>
-                <div class="line"></div>
-            </div>
+{#            <a class="headLogo" href="/">#}
+{#                <img src="{% static 'Frontend/IMG/logo.png' %}" alt="BedrijfsLogo">#}
+{#            </a>#}
+{#            <div class="burger" onclick="nav();">#}
+{#                <div class="line"></div>#}
+{#                <div class="line"></div>#}
+{#                <div class="line"></div>#}
+{#            </div>#}
+
             <div id="navList" class="nav">
-                    <a href="/" {% if request.get_full_path == "/" %} class="currentPage" {% else %} class="navLink" {% endif %} >Home</a>
-                    <a href="/contact" {% if request.get_full_path == "/contact" %} class="currentPage" {% else %} class="navLink" {% endif %} >Contact</a>
-                    <a href="/create" {% if request.get_full_path == "/create" %} class="currentPage" {% else %} class="navLink" {% endif %} >Create</a>
-                    <a href="/login" {% if request.get_full_path == "/login" %} class="currentPage" {% else %} class="navLink" {% endif %} >Login</a>
-                    <a href="/admin" {% if request.get_full_path == "/admin" %} class="currentPage" {% else %} class="navLink" {% endif %} >Admin</a>
+                <a class="headLogo" href="/">
+                    <img src="{% static 'Frontend/IMG/logo.png' %}" alt="BedrijfsLogo ">
+                </a>
+                <a href="/" {% if request.get_full_path == "/" %} class="currentPage" {% else %} class="nav-link" {% endif %} >Home</a>
+                <a href="/contact" {% if request.get_full_path == "/contact" %} class="currentPage" {% else %} class="nav-link" {% endif %} >Contact</a>
+                <a href="/login" {% if request.get_full_path == "/login" %} class="currentPage" {% else %} class="nav-link" {% endif %} >Login</a>
+
+                {% if user.is_authenticated %}
+                <a href="/create" {% if request.get_full_path == "/create" %} class="currentPage" {% else %} class="nav-link" {% endif %} >Create</a>
+                <a href="/admin" {% if request.get_full_path == "/admin" %} class="currentPage" {% else %} class="nav-link" {% endif %} >Admin</a>
+                {% endif %}
+
             </div>
         </header>
 

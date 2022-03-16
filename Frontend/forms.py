@@ -1,5 +1,6 @@
 from django import forms
-from .models import GeeksModel
+from django.forms import ModelForm
+from Frontend.models import GeeksModel
 
 
 # creating a form
@@ -11,7 +12,4 @@ class GeeksForm(forms.ModelForm):
         model = GeeksModel
 
         # specify fields to be used
-        fields = [
-            "title",
-            "description",
-        ]
+        fields = '__all__'

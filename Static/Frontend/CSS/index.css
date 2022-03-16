@@ -15,13 +15,13 @@
 /*    display: none;*/
 /*  }*/
     header{
-        background-color: green;
+        background-color: #00bbb6;
     }
 
     main {
         margin-top: 50px;
         width: 100%;
-        background: green;
+        background: #9fffc4;
       }
 
 }

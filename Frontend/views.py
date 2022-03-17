@@ -128,7 +128,7 @@ def create_view(request):
     context = {}
 
     # add the dictionary during initialization
-    form = GeeksForm(request.POST or None)
+    form = GeeksForm(request.POST or None, request.FILES or None)
 
     if form.is_valid():
         form.save()
@@ -155,6 +155,7 @@ def list_view(request):
         'page': 'Frontend/list_view.html',
         'dataset': GeeksModel.objects.all(),
     }
+
     return render(request, 'Frontend/index.html', data)
 
 

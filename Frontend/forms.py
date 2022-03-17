@@ -12,4 +12,5 @@ class GeeksForm(forms.ModelForm):
         model = GeeksModel
 
         # specify fields to be used
+        # It includes all the fields of model
         fields = '__all__'

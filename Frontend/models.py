@@ -20,6 +20,8 @@ class GeeksModel(models.Model):
     # id(models.AutoField(primary_key=True))
     title = models.CharField(max_length=200)
     description = models.TextField(max_length=200)
+    img = models.ImageField(upload_to='images/', default=" ")
+    prijs = models.IntegerField(default=0)
 
     # renames the instances of the model
     # with their title name

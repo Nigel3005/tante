@@ -6,6 +6,8 @@
         <a href="/{{ data.id }}">
             {{ data.title }}<br/>
             {{ data.description }}<br/>
+            <img src="{{ data.img.url}}" alt="Geen Foto Beschikbaar" style="max-height:150px"><br>
+            € {{ data.prijs }}<br/>
             <hr/>
         </a>
     {% endfor %}

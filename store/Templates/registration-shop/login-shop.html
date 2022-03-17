@@ -1,0 +1,29 @@
+{% extends 'store/main.html' %}
+{% load static %}
+
+{% block content %}
+<head>
+
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'Store/CSS/main.css' %}">
+
+</head>
+<main>
+    {% if user.is_authenticated %}
+        <br>
+        <h1 id="welkoms-bericht">Welkom {{ user.username }}</h1>
+        <h1 id="welkoms-bericht">je bent al ingelogd</h1>
+    {% else %}
+        <div class="login-box">
+        <h1>Login</h1>
+        <p>{{ error }}</p>
+        <form method="post">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Username">
+            <input type="password" name="password" placeholder="Password">
+            <button type="submit" name="login">Login</button>
+        </form>
+    </div>
+    {% endif %}
+</main>
+{% endblock content %}

@@ -1,6 +1,7 @@
 {% load static %}
 
-<div class="main">
+<main>
+{% if user.is_authenticated %}
 
     {% for data in dataset %}
         <a href="/{{ data.id }}">
@@ -11,5 +12,10 @@
             <hr/>
         </a>
     {% endfor %}
-  <a href="/create" {% if request.get_full_path == "/create" %} class="currentPage" {% else %} class="navLink" {% endif %} >Go back</a>
-</div>
+    <a href="/create" {% if request.get_full_path == "/create" %} class="currentPage" {% else %} class="navLink" {% endif %} >Go back</a>
+{% else %}
+
+    <h1>U bent niet gemachtigt deze pagina te bezoeken</h1>
+
+{% endif %}
+</main>

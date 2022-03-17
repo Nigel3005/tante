@@ -1,5 +1,7 @@
 {% load static %}
+
 <main>
+{% if user.is_authenticated %}
     <form method="POST" enctype="multipart/form-data">
 
         <!-- Security token -->
@@ -11,4 +13,10 @@
         <input type="submit" value="Submit">
     </form>
      <a href="/list" {% if request.get_full_path == "/list" %} class="currentPage" {% else %} class="navLink" {% endif %} >List</a>
+
+{% else %}
+
+    <h1>U bent niet gemachtigt deze pagina te bezoeken</h1>
+
+{% endif %}
 </main>

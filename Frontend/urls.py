@@ -19,7 +19,7 @@ urlpatterns = [
     path('<int:id>/update', views.update_view, name='Update'),
     path('<int:id>/delete', delete_view, name='Delete'),
 
-    path('login', views.loginView, name="Login"),
+    path('login-frontend', views.loginView, name="Login-Frontend"),
     path('logout', views.logoutView, name="Logout"),
     path('404', views.handler404, name="404"),
 

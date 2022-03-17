@@ -90,23 +90,24 @@ def loginView(request):
                 return redirect('/home')
             else:
                 data = {
-                    'page': 'registration/login.html',
+                    'page': 'registration-Frontend/login-Frontend.html',
                     'error': 'User account not activated',
                 }
                 return render(request, 'Frontend/index.html', data)
         else:
             data = {
-                'page': 'registration/login.html',
+                'page': 'registration-Frontend/login-Frontend.html',
                 'error': 'Incorrect password and/or username',
             }
             return render(request, 'Frontend/index.html', data)
 
     data = {
-        'page': 'registration/login.html',
+        'page': 'registration-Frontend/login-Frontend.html',
         'error': '',
     }
 
     return render(request, 'Frontend/index.html', data)
+
 
 def logoutView(request):
     logout(request)
@@ -186,7 +187,7 @@ def update_view(request, id):
     obj = get_object_or_404(GeeksModel, id=id)
 
     # pass the object as instance in form
-    form = GeeksForm(request.POST or None, instance=obj)
+    form = GeeksForm(request.POST or None, request.FILES or None,  instance=obj)
 
     # save the data from the form and
     # redirect to detail_view
@@ -199,7 +200,7 @@ def update_view(request, id):
 
     data = {
         'page': 'Frontend/update_view.html',
-        'form': GeeksForm(request.POST or None, instance=obj),
+        'form': GeeksForm(request.POST or None, request.FILES or None, instance=obj),
     }
 
     return render(request, "Frontend/index.html", data)

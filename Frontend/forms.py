@@ -14,3 +14,7 @@ class GeeksForm(forms.ModelForm):
         # specify fields to be used
         # It includes all the fields of model
         fields = '__all__'
+
+
+class EmailField:
+    pass

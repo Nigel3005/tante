@@ -1,0 +1,155 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'Store/CSS/dash1.css' %}">
+<main class="custom-container main-dash">
+    <div class="div-top">
+        <div class="div-top-item blue">
+            <div class="div-left">
+                <div class="inner-div-left">
+                    {% with orders|first as first_omzet %}
+                        <h4>€ {{ first_omzet.total_omzet }}</h4>
+                        <h2>Omzet</h2>
+                    {% endwith %}
+                </div>
+            </div>
+            <div class="div-right">
+                <i class="fa fa-pie-chart" style="font-size: 40px;"></i>
+            </div>
+        </div>
+
+        <div class="div-top-item green">
+            <div class="div-left">
+                <div class="inner-div-left">
+                    {% with orders|first as first_order %}
+                        <h4>{{ first_order.total_orders }}</h4>
+                        <h2>Bestellingen</h2>
+                    {% endwith %}
+                </div>
+            </div>
+            <div class="div-right">
+                <i class="fa fa-line-chart" style="font-size: 40px;"></i>
+            </div>
+        </div>
+
+        <div class="div-top-item purple">
+            <div class="div-left">
+                <div class="inner-div-left">
+                    {% with customers|first as first_customer %}
+                        <h4>{{ first_customer.total_customers }}</h4>
+                        <h2>Klanten</h2>
+                    {% endwith %}
+                </div>
+            </div>
+            <div class="div-right">
+                <i class="fa fa-group" style="font-size: 40px;"></i>
+            </div>
+        </div>
+
+        <div class="div-top-item orange">
+            <div class="div-left">
+                <div class="inner-div-left">
+                    {% with products|first as first_product %}
+                        <h4>{{ first_product.total_products }}</h4>
+                        <h2>Producten</h2>
+                    {% endwith %}
+                </div>
+            </div>
+            <div class="div-right">
+                <i class="fa fa-shopping-bag" style="font-size: 40px;"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="div-chart">
+        <div class="div-chart-1 orange">
+            <canvas id="bestsellers"></canvas>
+        </div>
+        <br>
+        <div class="div-chart-2 orange">
+            <canvas id="bestsellerss"></canvas>
+        </div>
+    </div>
+
+</main>
+
+<script>
+    // jquery function
+    {% with orders|first as order %}
+        $(document).ready(function () {
+            var ctx = document.getElementById('bestsellers').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['{{ order.bestseller_name }}', '{{ order.second_bestseller_name }}', '{{ order.third_bestseller_name }}'], //loop through queryset,
+                    datasets: [{
+                        label: 'Bestsellers top 3',
+                        data: [ {{ order.bestseller_aantal }}, {{ order.second_bestseller_aantal}}, {{order.third_bestseller_aantal}}, 0 ],
+                        backgroundColor: [
+                            'rgb(139,206,252)',
+                            'rgb(134,253,253)',
+                            'rgb(165,119,255)',
+                        ],
+                        borderColor: [
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                        ],
+                        borderWidth: 1
+                    },]
+                },
+                options: {
+                    legend: {
+                        labels: {
+                            fontColor: "white",
+                            fontSize: 16
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+    {% endwith %}
+
+    {% with orders|first as order %}
+        $(document).ready(function () {
+            var ctx = document.getElementById('bestsellerss').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['{{ order.bestseller_name }}', '{{ order.second_bestseller_name }}', '{{ order.third_bestseller_name }}'], //loop through queryset,
+                    datasets: [{
+                        label: 'Alle bestellingen',
+                        data: [ {{ order.bestseller_aantal }}, {{ order.second_bestseller_aantal}}, {{order.third_bestseller_aantal}}, 0 ],
+                        backgroundColor: [
+                            'rgba(54,162,235,0.6)',
+                            'rgba(75,192,192,0.6)',
+                            'rgba(153, 102, 255, 0.6)',
+                        ],
+                        borderColor: [
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                        ],
+                        borderWidth: 1
+                    },]
+                },
+                options: {
+                    legend: {
+                        labels: {
+                            fontColor: "white",
+                            fontSize: 16
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+    {% endwith %}
+</script>

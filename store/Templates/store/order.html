@@ -1,0 +1,125 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'Store/CSS/orders.css' %}">
+<main class="container custom-container mt-3">
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <input class="form-control" id="myInput" type="text" placeholder="Search..">
+    <br>
+    <table class="table table-bordered" id="myTable2">
+
+        <thead>
+
+        {# attributen in class Order #}
+        <th onclick="sortTable(0)">Naam</th>
+        <th onclick="sortTable(1)">Datum order</th>
+        <th onclick="sortTable(2)">Compleet</th>
+        <th onclick="sortTable(3)">Transactie ID</th>
+        <th onclick="sortTable(4)">Order ID</th>
+{#        <th onclick="sortTable(5)">Shipping</th>#}
+
+        <th onclick="sortTable(6)">Producten</th>
+        <th onclick="sortTable(7)">Hoeveelheid</th>
+        <th onclick="sortTable(8)">OrderItem ID</th>
+
+        </thead>
+        {% for order in orders %}
+
+            <tbody id="myTable">
+            {% for items in orderItems %}
+
+                {% if order.id == items.order_id %}
+                    <tr>
+                        <td>{{ order.customer }}</td>
+                        <td>{{ order.date_ordered }}</td>
+                        <td>{{ order.complete }}</td>
+                        <td>{{ order.transaction_id }}</td>
+                        <td>{{ order.id }}</td>
+{#                        <td>{{ order.shipping }}</td>#}
+                        <td>{{ items.product }}</td>
+                        <td>{{ items.quantity }}</td>
+                        <td>{{ items.order }}</td>
+                    </tr>
+
+                {% endif %}
+
+            {% endfor %}
+            </tbody>
+
+        {% endfor %}
+    </table>
+{#    <p>Note that we start the search in tbody, to prevent filtering the table headers.</p>#}
+</main>
+<script>
+    $(document).ready(function () {
+        $("#myInput").on("keyup", function () {
+            let value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+        for (let i = 0; i <= 9; i++) {
+            sortTable(i);
+            sortTable(i);
+        }
+    });
+
+    function sortTable(n) {
+        let table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("myTable2");
+        switching = true;
+        // Set the sorting direction to ascending:
+        dir = "asc";
+        /* Make a loop that will continue until
+        no switching has been done: */
+        while (switching) {
+            // Start by saying: no switching is done:
+            switching = false;
+            rows = table.rows;
+            /* Loop through all table rows (except the
+            first, which contains table headers): */
+            for (i = 1; i < (rows.length - 1); i++) {
+                // Start by saying there should be no switching:
+                shouldSwitch = false;
+                /* Get the two elements you want to compare,
+                one from current row and one from the next: */
+                x = rows[i].getElementsByTagName("TD")[n];
+                y = rows[i + 1].getElementsByTagName("TD")[n];
+                /* Check if the two rows should switch place,
+                based on the direction, asc or desc: */
+                if (dir === "asc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        // If so, mark as a switch and break the loop:
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir === "desc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                        // If so, mark as a switch and break the loop:
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                /* If a switch has been marked, make the switch
+                and mark that a switch has been done: */
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                // Each time a switch is done, increase this count by 1:
+                switchcount++;
+            } else {
+                /* If no switching has been done AND the direction is "asc",
+                set the direction to "desc" and run the while loop again. */
+                if (switchcount === 0 && dir === "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+        let myElement = document.querySelector('#myTable2');
+        myElement.classList.add('table-bordered');
+    }
+</script>

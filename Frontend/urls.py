@@ -7,10 +7,7 @@ from . import views
 from .views import detail_view, delete_view
 
 urlpatterns = [
-    path('', views.indexView, name='Home'),
     path('home', views.indexView, name='Home'),
-
-    path('contact', views.contactView, name='Contact'),
 
     path('create', views.create_view, name='Create'),
     path('list', views.list_view, name='List'),

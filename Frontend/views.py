@@ -111,7 +111,7 @@ def loginView(request):
 
 def logoutView(request):
     logout(request)
-    return redirect('Home')
+    return redirect('/')
 
 
 def handler404(request, *args, **argv):

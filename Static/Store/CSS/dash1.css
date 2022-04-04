@@ -1,0 +1,79 @@
+.custom-container {
+    width: 100%;
+    background-image: linear-gradient(to right bottom, #31002d, #320538, #310c44, #2d1450, #241c5d, #1b205e, #0f225e, #00255d, #002350, #002043, #001c35, #001827);
+    min-height: 100vh;
+    padding: 5%;
+}
+
+.div-top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.div-top-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
+    padding: 5px;
+    height: 120px;
+    width: 22%;
+    border-radius: 5px;
+    box-shadow: #3b3b3b 0 0 10px;
+}
+
+.div-chart{
+    display: flex;
+    flex-direction: row;
+    margin-top: 70px;
+}
+
+.div-chart-1{
+    border-radius: 8px;
+    box-shadow: #3b3b3b 0 0 10px;
+    width: 55%;
+}
+
+.div-chart-2{
+    border-radius: 8px;
+    box-shadow: #3b3b3b 0 0 10px;
+    width: 50%;
+    margin-left: 15px;
+}
+
+/*for the names and the values of the bar*/
+.div-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    padding: 20px;
+}
+
+/*for font awsome*/
+.div-right {
+    justify-content: right;
+    padding: 20px;
+}
+
+/*colors defined for charts*/
+.blue {
+    background-image: linear-gradient(to top right, #90fc84, #10918d);
+    color: white;
+}
+
+.green {
+    background-image: linear-gradient(to top right, #43cea2, #185a9d);
+    color: white;
+}
+
+.purple {
+    background-image: linear-gradient(to top right, #b993d6, #6d92e0);
+    color: white;
+}
+
+.orange {
+    background-image: linear-gradient(to top right, #FFA17F, #005193);
+    color: white;
+}

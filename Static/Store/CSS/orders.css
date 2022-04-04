@@ -1,0 +1,23 @@
+.custom-container {
+    /*background-image: linear-gradient(to right bottom, #8d00b3, #3d53d2, #0072d6, #0087c7, #0095b1, #0093ae, #0091ac, #008fa9, #007db8, #0067c3, #0048be, #6000a2);*/
+    /*background-image: linear-gradient(to right bottom, #380000, #4c0019, #5d0032, #670053, #63007b, #63007b, #62007a, #62007a, #650052, #5a0031, #480019, #340000);*/
+    background-image: linear-gradient(to right bottom, #199e00, #007940, #005349, #002d34, #000406);
+    /*background-image: linear-gradient(to right bottom, #158400, #006635, #00473e, #00272e, #000406);*/
+    min-height: 100vh;
+    min-width: 100vw;
+    padding-left: 8%;
+    padding-right: 8%;
+    padding-bottom: 4%;
+}
+
+th{
+    font-weight: bold;
+    font-size: 1.3em;
+    color: #000000;
+}
+
+td{
+    font-weight: bold;
+    font-size: 1em;
+    color: white;
+}

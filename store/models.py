@@ -151,9 +151,8 @@ class Order(models.Model):
 
     @property
     def third_bestseller_aantal(self):
-        print("Working:", repr(
-            sum(item.quantity for item in OrderItem.objects.filter(product__name=self.third_bestseller_name).all())))
         return sum(item.quantity for item in OrderItem.objects.filter(product__name=self.third_bestseller_name).all())
+
 
     @property
     def get_quantity_for_all_names(self):

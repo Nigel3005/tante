@@ -130,6 +130,13 @@ def store_View(request):
 
 
 def product_View(request, id):
+    data = cartData(request)
+
+    cartItems = data['cartItems']
+    order = data['order']
+    items = data['items']
+
+    cartContext = {'items': items, 'order': order, 'cartItems': cartItems}
     context = dict()
     # add the dictionary during initialization
     context["product"] = Product.objects.get(id=id)
@@ -138,7 +145,7 @@ def product_View(request, id):
     args = {
         'product': Product.objects.get(id=id),
     }
-    return render(request, 'store/product_view.html', args)
+    return render(request, 'store/product_view.html', args, cartContext)
 
 
 def cart_View(request):

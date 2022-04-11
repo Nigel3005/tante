@@ -68,7 +68,7 @@ Mail adres :    {}
 Message: 
 {}
     '''.format(data['name'], data['mail'], data['msg'])
-    contactForm = contact(name=name, email=mail, bericht=msg)
+    contactForm = Contact(name=name, email=mail, bericht=msg)
     contactForm.save()
 
     send_mail(data['sub'], MSG, 'webmail@user-service.nl', ['info@user-service.nl'],
@@ -130,22 +130,24 @@ def store_View(request):
 
 
 def product_View(request, id):
-    data = cartData(request)
-
-    cartItems = data['cartItems']
-    order = data['order']
-    items = data['items']
-
-    cartContext = {'items': items, 'order': order, 'cartItems': cartItems}
     context = dict()
     # add the dictionary during initialization
     context["product"] = Product.objects.get(id=id)
-    print(id)
-
+    data = cartData(request)
+    cartItems = data['cartItems']
     args = {
         'product': Product.objects.get(id=id),
+        'cartItems': cartItems,
     }
-    return render(request, 'store/product_view.html', args, cartContext)
+    # data = cartData(request)
+
+    # cartItems = data['cartItems']
+    # order = data['order']
+    # items = data['items']
+    # productss = Product.objects.all()
+
+    # cartContext = {'cartItems': cartItems}
+    return render(request, 'store/product_view.html', args)
 
 
 def cart_View(request):
@@ -229,6 +231,7 @@ def processOrder(request):
     return JsonResponse('Payment submitted..', safe=False)
 
 
+# -----------------------DASHBOARD PAGES-----------------------
 def orders_View(request):
     if request.user.is_superuser:
         orders = Order.objects.all().order_by('id').reverse()

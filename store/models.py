@@ -40,21 +40,10 @@ class Product(models.Model):
     def imageURL(self):
         return self.image.url if hasattr(self, 'image') and hasattr(self.image, 'url') else ''
 
-    @property
-    def image1URL(self):
-        return self.image1.url if hasattr(self, 'image1') and hasattr(self.image1, 'url') else ''
-
-    @property
-    def image2URL(self):
-        return self.image2.url if hasattr(self, 'image2') and hasattr(self.image2, 'url') else ''
-
-    @property
-    def image3URL(self):
-        return self.image3.url if hasattr(self, 'image3') and hasattr(self.image3, 'url') else ''
-
-    @property
-    def image4URL(self):
-        return self.image4.url if hasattr(self, 'image4') and hasattr(self.image4, 'url') else ''
+    def __getattr__(self, attr):
+        if attr.startswith("image") and attr.endswith("URL"):
+            return getattr(self, attr[:-3]).url
+        raise AttributeError
 
     @property
     def total_products(self):
@@ -153,7 +142,6 @@ class Order(models.Model):
     def third_bestseller_aantal(self):
         return sum(item.quantity for item in OrderItem.objects.filter(product__name=self.third_bestseller_name).all())
 
-
     @property
     def get_quantity_for_all_names(self):
         counters = dict()
@@ -243,7 +231,7 @@ class ShippingAddress(models.Model):
         return self.address
 
 
-class contact(models.Model):
+class Contact(models.Model):
     name = models.CharField(max_length=200, default=" ")
     email = models.EmailField(max_length=200, default=" ")
     bericht = models.TextField(max_length=200, default=" ")

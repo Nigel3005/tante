@@ -65,7 +65,7 @@ def makeMailUserService(name, mail, sub, msg):
     MSG = '''
 Webmail van:    {}
 Mail adres :    {}
-Message: 
+Message:
 {}
     '''.format(data['name'], data['mail'], data['msg'])
     contactForm = Contact(name=name, email=mail, bericht=msg)
@@ -101,7 +101,13 @@ def contactView(request):
         return render(request, 'store/contact-correct.html', data)
 
     else:
-        return render(request, 'store/contact.html')
+        data = cartData(request)
+
+        cartItems = data['cartItems']
+        args = {
+            'cartItems': cartItems,
+        }
+        return render(request, 'store/contact.html', args)
 
 
 def logoutView(request):
@@ -139,14 +145,6 @@ def product_View(request, id):
         'product': Product.objects.get(id=id),
         'cartItems': cartItems,
     }
-    # data = cartData(request)
-
-    # cartItems = data['cartItems']
-    # order = data['order']
-    # items = data['items']
-    # productss = Product.objects.all()
-
-    # cartContext = {'cartItems': cartItems}
     return render(request, 'store/product_view.html', args)
 
 

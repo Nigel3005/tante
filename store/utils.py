@@ -6,7 +6,7 @@ def cookieCart(request):
     # Create empty cart for now for non-logged in user
     try:
         cart = json.loads(request.COOKIES['cart'])
-    except:
+    except BaseException:
         cart = {}
         print('CART:', cart)
 
@@ -34,9 +34,9 @@ def cookieCart(request):
                 }
                 items.append(item)
 
-                if product.digital == False:
+                if not product.digital:
                     order['shipping'] = True
-        except:
+        except BaseException:
             pass
 
     return {'cartItems': cartItems, 'order': order, 'items': items}
@@ -47,13 +47,12 @@ def cartData(request):
         print("User is logged in")
         customer = request.user.customer
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        items = order.orderitem_set.all()
         if order.complete:
             print("Order is complete")
-            items = order.orderitem_set.all()
             cartItems = 0
         else:
             print("Order is not complete")
-            items = order.orderitem_set.all()
             cartItems = order.get_cart_items
 
     else:

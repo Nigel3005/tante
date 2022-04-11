@@ -1,0 +1,23 @@
+{% load static %}
+
+<main>
+    <br>
+    <br>
+    <br>
+    <br>
+    {% if user.is_authenticated %}
+	<!-- Create a Form -->
+        <form method="POST">
+            <!-- Security token by Django -->
+            {% csrf_token %}
+            Are you want to delete this item ?
+            <input type="submit" value="Yes" />
+            <a href="/dashboard/{{ data.id }}">Cancel </a>
+        </form>
+
+    {% else %}
+
+        <h1>U bent niet gemachtigt deze pagina te bezoeken</h1>
+
+    {% endif %}
+</main>

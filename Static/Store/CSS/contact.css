@@ -1,14 +1,17 @@
 body {
-    background-color: #fafafa
+    background-color: #fafafa;
+    color: black;
 }
 
 .conf {
-    background-color: #000128
+    background-color: #fafafa;
+    color: black;
 }
 
 .msg-form {
     background-color: white;
-    padding: 20px
+    padding: 20px;
+    color: black;
 }
 
 .pad-icon {
@@ -18,27 +21,27 @@ body {
 
 .pad-icon a {
     text-decoration: none;
-    margin-right: 40px
+    margin-right: 40px;
 }
 
 .input-group input:focus {
-    border: 1px solid blue
+    border: 1px solid blue;
 }
 
 .pad-icon a:active {
     height: 30px;
     width: 30px;
     background-color: #0080ff;
-    border-radius: 100%
+    border-radius: 100%;
 }
 
 .links {
     padding-top: 50px;
-    width: 50%
+    width: 50%;
 }
 
 #bordering a:active {
-    border: 1px solid #0080ff
+    border: 1px solid #0080ff;
 }
 
 @media(min-width:568px) {
@@ -46,7 +49,7 @@ body {
         margin: 100px 30px;
         width: 96%;
         padding-top: 50px;
-        padding-bottom: 50px
+        padding-bottom: 50px;
     }
 }
 
@@ -55,10 +58,10 @@ body {
         margin: 10px 10px;
         width: 94%;
         padding-top: 20px;
-        padding-bottom: 20px
+        padding-bottom: 20px;
     }
 
     .pad {
-        padding-top: 20px
+        padding-top: 20px;
     }
 }

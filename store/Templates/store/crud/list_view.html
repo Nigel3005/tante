@@ -1,0 +1,32 @@
+{% load static %}
+
+<main>
+    <br>
+    <br>
+    <br>
+{% if user.is_superuser %}
+
+    {% for product in products %}
+        <a href="/dashboard/{{ product.id }}">
+            Naam Product: {{ product.name }}<br/>
+            Beschrijving: {{ product.description }}<br/>
+            <img src="{{ product.imageURL}}" alt="Geen Foto Beschikbaar" style="max-height:150px"><br> <br>
+            <img src="{{ product.image1URL}}" alt="Geen Foto Beschikbaar" style="max-height:100px">
+            <img src="{{ product.image2URL}}" alt="Geen Foto Beschikbaar" style="max-height:100px">
+            <img src="{{ product.image3URL}}" alt="Geen Foto Beschikbaar" style="max-height:100px">
+            <img src="{{ product.image4URL}}" alt="Geen Foto Beschikbaar" style="max-height:100px"><br>
+            Digitaal item: {{ product.digital }} <br>
+            € {{ product.price }}<br/>
+            <hr/>
+        </a>
+    {% endfor %}
+    <a href="/dashboard/create">Maak nieuw product</a>
+
+
+
+{% else %}
+
+    <h1>U bent niet gemachtigt deze pagina te bezoeken</h1>
+
+{% endif %}
+</main>

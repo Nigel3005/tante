@@ -1,0 +1,27 @@
+{% load static %}
+
+<main>
+
+    <br>
+    {% if user.is_authenticated %}
+        <!-- Specify fields to be displayed -->
+        {{ product.title }}<br/>
+        {{ product.description }}<br/>
+        <img src="{{ product.imageURL}}" alt="Geen Foto Beschikbaar" style="max-height:150px"><br><br>
+        <img src="{{ product.image1URL}}" alt="Geen Foto Beschikbaar" style="max-height:100px">
+        <img src="{{ product.image2URL}}" alt="Geen Foto Beschikbaar" style="max-height:100px">
+        <img src="{{ product.image3URL}}" alt="Geen Foto Beschikbaar" style="max-height:100px">
+        <img src="{{ product.image4URL}}" alt="Geen Foto Beschikbaar" style="max-height:100px"><br>
+        € {{ product.price }}<br>
+
+        <br>
+        <a href="{{ product.id }}/update">Update item</a> <br/>
+        <a href="{{ product.id }}/delete">Delete item</a> <br/>
+        <a href="/dashboard?ecom=2">Go Back</a>
+
+    {% else %}
+
+        <h1>U bent niet gemachtigt deze pagina te bezoeken</h1>
+
+    {% endif %}
+</main>

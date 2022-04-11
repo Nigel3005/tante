@@ -2,7 +2,6 @@ from django.contrib.auth.forms import UserCreationForm
 from django.db import models
 from django.contrib.auth.models import User
 
-
 # Create your models here.
 from Frontend import forms
 
@@ -23,11 +22,19 @@ class Customer(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=200)
     price = models.FloatField()
+    description = models.CharField(max_length=255, null=True, blank=True)
     digital = models.BooleanField(default=False, null=True, blank=True)
     image = models.ImageField(upload_to='images/', default="images/placeholder.png")
+    image1 = models.ImageField(upload_to='images/', default="images/placeholder.png")
+    image2 = models.ImageField(upload_to='images/', default="images/placeholder.png")
+    image3 = models.ImageField(upload_to='images/', default="images/placeholder.png")
+    image4 = models.ImageField(upload_to='images/', default="images/placeholder.png")
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name_plural = "Products"
 
     @property
     def imageURL(self):
@@ -35,6 +42,34 @@ class Product(models.Model):
             return ''
         else:
             return self.image.url
+
+    @property
+    def image1URL(self):
+        if not hasattr(self, 'image1') or not hasattr(self.image1, 'url'):
+            return ''
+        else:
+            return self.image1.url
+
+    @property
+    def image2URL(self):
+        if not hasattr(self, 'image2') or not hasattr(self.image2, 'url'):
+            return ''
+        else:
+            return self.image2.url
+
+    @property
+    def image3URL(self):
+        if not hasattr(self, 'image3') or not hasattr(self.image3, 'url'):
+            return ''
+        else:
+            return self.image3.url
+
+    @property
+    def image4URL(self):
+        if not hasattr(self, 'image4') or not hasattr(self.image4, 'url'):
+            return ''
+        else:
+            return self.image4.url
 
     @property
     def total_products(self):
@@ -130,7 +165,8 @@ class Order(models.Model):
 
     @property
     def third_bestseller_aantal(self):
-        print("Working:", repr(sum(item.quantity for item in OrderItem.objects.filter(product__name=self.third_bestseller_name).all())))
+        print("Working:", repr(
+            sum(item.quantity for item in OrderItem.objects.filter(product__name=self.third_bestseller_name).all())))
         return sum(item.quantity for item in OrderItem.objects.filter(product__name=self.third_bestseller_name).all())
 
     @property

@@ -1,23 +1,21 @@
-import json
 import datetime
+import json
+import os.path
 
-from django.core.mail import send_mail
-from django.core.mail.backends import console
-from django.views.decorators.csrf import csrf_exempt
-
-from django.http import JsonResponse
-from django.shortcuts import redirect
 from django.contrib.auth import login, logout, authenticate
-
-from django.urls import path
+from django.core.mail import send_mail
+from django.http import JsonResponse
 from django.shortcuts import (get_object_or_404,
                               render,
                               HttpResponseRedirect)
+from django.shortcuts import redirect
+from django.urls import path
+from django.views.decorators.csrf import csrf_exempt
 
 from Frontend.models import contact
-from .forms import SignUpForm
+from .forms import SignUpForm, ProductForm
 from .models import *
-from .utils import cookieCart, cartData, guestOrder
+from .utils import cartData, guestOrder
 
 
 # Create your views here.
@@ -99,10 +97,9 @@ def contactView(request):
         makeMailClient(email)
 
         data = {
-            'page': 'store/contact-correct.html',
             'name': name,
         }
-        return render(request, 'store/contact.html', data)
+        return render(request, 'store/contact-correct.html', data)
 
     else:
         return render(request, 'store/contact.html')
@@ -113,7 +110,7 @@ def logoutView(request):
     return redirect('/')
 
 
-def handler404(request, *args, **argv):
+def handler404(request, *args):
     if request.get_full_path != f"{path}":
         data = {
             'page': 'store/404.html',
@@ -129,8 +126,20 @@ def store_View(request):
     items = data['items']
 
     products = Product.objects.all()
-    context = {'products': products, 'cartItems': cartItems}
+    context = {'products': products, 'cartItems': cartItems, 'order': order, 'items': items}
     return render(request, 'store/store.html', context)
+
+
+def product_View(request, id):
+    context = dict()
+    # add the dictionary during initialization
+    context["product"] = Product.objects.get(id=id)
+    print(id)
+
+    args = {
+        'product': Product.objects.get(id=id),
+    }
+    return render(request, 'store/product_view.html', args)
 
 
 def cart_View(request):
@@ -235,6 +244,132 @@ def dashboard_View(request):
         orderItems = OrderItem.objects.all()
         context = {'orders': orders, 'orderItems': orderItems, 'products': products, 'customers': customers}
         return render(request, 'store/dashboard.html', context)
+    else:
+        print('not authenticated')
+        return redirect('/')
+
+
+# CRUD PRODUCTS
+
+def create_view(request):
+    if request.user.is_superuser:
+        # dictionary for initial data with
+        # field names as keys
+
+        context = dict()
+        # add the dictionary during initialization
+        form = ProductForm(request.POST or None, request.FILES or None)
+
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/dashboard?ecom=2')
+
+        context['form'] = form
+
+        data = {
+            'form': ProductForm(request.POST or None),
+        }
+
+        return render(request, 'store/dashboard.html', data)
+    else:
+        print('not authenticated')
+        return redirect('/')
+
+
+def list_view(request):
+    if request.user.is_superuser:
+        # dictionary for initial data with
+        # field names as keys
+        context = dict()
+
+        # add the dictionary during initialization
+        context["products"] = Product.objects.all()
+
+        data = {
+            'products': Product.objects.all(),
+        }
+
+        return render(request, 'store/dashboard.html', data)
+    else:
+        print('not authenticated')
+        return redirect('/')
+
+
+# pass id attribute from urls
+def detail_view(request, id):
+    if request.user.is_superuser:
+        # dictionary for initial data with
+        # field names as keys
+        context = dict()
+        print('detail view')
+        # add the dictionary during initialization
+        context["product"] = Product.objects.get(id=id)
+        print(id)
+
+        args = {
+            'product': Product.objects.get(id=id),
+        }
+
+        return render(request, "store/dashboard.html", args)
+    else:
+        print('not authenticated')
+        return redirect('/')
+
+
+# update view for details
+def update_view(request, id):
+    if request.user.is_superuser:
+        # dictionary for initial data with
+        # field names as keys
+        context = dict()
+        print('update view')
+
+        # fetch the object related to passed id
+        obj = get_object_or_404(Product, id=id)
+        # pass the object as instance in form
+
+        form = ProductForm(request.POST or None, request.FILES or None, instance=obj)
+
+        # save the data from the form and
+        # redirect to detail_view
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect("/dashboard/" + str(id))
+
+        # add form dictionary to context
+        context["form"] = form
+
+        data = {
+            'form': ProductForm(request.POST or None, request.FILES or None, instance=obj),
+        }
+
+        return render(request, "store/dashboard.html", data)
+    else:
+        print('not authenticated')
+        return redirect('/')
+
+
+# delete view for details
+def delete_view(request, id):
+    if request.user.is_superuser:
+        # dictionary for initial data with
+        # field names as keys
+
+        # fetch the object related to passed id
+        obj = get_object_or_404(Product, id=id)
+
+        if request.method == "POST":
+            # delete object
+            obj.delete()
+            # after deleting redirect to
+            # home page
+            return HttpResponseRedirect("/dashboard?ecom=2")
+
+        data = {
+            'data': Product.objects.get(id=id),
+        }
+
+        return render(request, "store/dashboard.html", data)
     else:
         print('not authenticated')
         return redirect('/')

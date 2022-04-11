@@ -20,7 +20,8 @@
                             <p>Verzendgegevens:</p>
                             <hr>
                             <div class="form-field">
-                                <input class="form-control" type="text" name="address" placeholder="Straat + huisnummer..">
+                                <input class="form-control" type="text" name="address"
+                                       placeholder="Straat + huisnummer..">
                             </div>
                             <div class="form-field">
                                 <input class="form-control" type="text" name="postcode" placeholder="Postcode..">
@@ -41,7 +42,8 @@
                 <br>
                 <div class="box-element hidden" id="payment-info">
                     <small>Paypal Options</small>
-                    <button id="make-payment">Betaal</button>
+                    {#                    <button id="make-payment">Betaal</button>#}
+                    <div id="paypal-button-container"></div>
                 </div>
 
             </div>
@@ -66,6 +68,101 @@
             </div>
         </div>
     </main>
+
+        <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=EUR"></script>
+        <script src="https://www.paypal.com/sdk/js?client-id=AWSHWX0nxO7M-WgrUUhknoZ4nd8UX9bA_Lgd2epD4EnWr3GDvOV1IkLTpsL5cbTKNTV0eXhhRErek9Qk&currency=EUR&disable-funding=credit"></script>
+
+        <script>
+            var total = '{{ order.get_cart_total }}'
+
+            // Render the PayPal button into #paypal-button-container
+            paypal.Buttons({
+
+                style: {
+                    color: 'blue',
+                    shape: 'rect',
+                },
+
+                // Set up the transaction
+                createOrder: function (data, actions) {
+                    return actions.order.create({
+                        purchase_units: [{
+                            amount: {
+                                value: parseFloat(total).toFixed(2)
+                            }
+                        }]
+                    });
+                },
+
+
+                // Finalize the transaction
+                onApprove: function (data, actions) {
+                    return actions.order.capture().then(function (details) {
+                        // Show a success message to the buyer
+                        submitFormData()
+                    });
+                }
+
+
+            }).render('#paypal-button-container');
+        </script>
+
+{#        <div id="smart-button-container">#}
+{#          <div style="text-align: center;">#}
+{#            <div id="paypal-button-container"></div>#}
+{#          </div>#}
+{#        </div>#}
+{#    <script src="https://www.paypal.com/sdk/js?client-id=AWSHWX0nxO7M-WgrUUhknoZ4nd8UX9bA_Lgd2epD4EnWr3GDvOV1IkLTpsL5cbTKNTV0eXhhRErek9Qk&enable-funding=venmo&currency=EUR"#}
+{#            data-sdk-integration-source="button-factory"></script>#}
+{#    <script>#}
+{#        var total = '{{ order.get_cart_total }}'#}
+{##}
+{#        function initPayPalButton() {#}
+{#            paypal.Buttons({#}
+{#                style: {#}
+{#                    shape: 'rect',#}
+{#                    color: 'blue',#}
+{#                    layout: 'vertical',#}
+{#                    label: 'paypal',#}
+{##}
+{#                },#}
+{##}
+{#                // Set up the transaction#}
+{#                createOrder: function (data, actions) {#}
+{#                    return actions.order.create({#}
+{#                        purchase_units: [{#}
+{#                            amount: {#}
+{#                                value: parseFloat(total).toFixed(2)#}
+{#                            }#}
+{#                        }]#}
+{#                    });#}
+{#                },#}
+{##}
+{#                onApprove: function (data, actions) {#}
+{#                    return actions.order.capture().then(function (orderData) {#}
+{##}
+{#                        // Full available details#}
+{#                        console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));#}
+{##}
+{#                        // Show a success message within this page, e.g.#}
+{#                        const element = document.getElementById('paypal-button-container');#}
+{#                        element.innerHTML = '';#}
+{#                        element.innerHTML = '<h3>Thank you for your payment!</h3>';#}
+{##}
+{#                        // Or go to another URL:  actions.redirect('thank_you.html');#}
+{##}
+{#                    });#}
+{#                },#}
+{##}
+{#                onError: function (err) {#}
+{#                    console.log(err);#}
+{#                }#}
+{#            }).render('#paypal-button-container');#}
+{#        }#}
+{##}
+{#        initPayPalButton();#}
+{#    </script>#}
+
     <script type="text/javascript">
         var shipping = '{{order.shipping}}'
         var total = '{{order.get_cart_total|floatformat:2}}'
@@ -93,9 +190,9 @@
             document.getElementById('payment-info').classList.remove("hidden");
         })
 
-        document.getElementById('make-payment').addEventListener('click', function (e) {
-            submitFormData()
-        })
+        {#document.getElementById('make-payment').addEventListener('click', function (e) {#}
+        {#    submitFormData()#}
+        {# }) #}
 
         function submitFormData() {
             console.log('Payment button clicked')

@@ -178,7 +178,15 @@
         {% elif request.get_full_path == "/dashboard?ecom=1" %}
             {% include 'store/order.html' %}
         {% elif request.get_full_path == "/dashboard?ecom=2" %}
-            Ecomerce 2!
+            {% include 'store/crud/list_view.html' %}
+        {% elif request.get_full_path == "/dashboard/create" %}
+            {% include 'store/crud/create_view.html' %}
+        {% elif "/dashboard/" in request.get_full_path and "/update" in request.get_full_path %}
+            {% include 'store/crud/update_view.html' %}
+        {% elif "/dashboard/" in request.get_full_path and "/delete" in request.get_full_path %}
+            {% include 'store/crud/delete_view.html' %}
+        {% elif "/dashboard/" in request.get_full_path %}
+            {% include 'store/crud/detail_view.html' %}
         {% endif %}
 
         <!-- page-content" -->

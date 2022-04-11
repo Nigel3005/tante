@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'bootstrap5',
 
     # Own
-    'Frontend',
     'store',
 
 ]

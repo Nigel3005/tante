@@ -12,7 +12,6 @@ from django.shortcuts import redirect
 from django.urls import path
 from django.views.decorators.csrf import csrf_exempt
 
-from Frontend.models import contact
 from .forms import SignUpForm, ProductForm
 from .models import *
 from .utils import cartData, guestOrder

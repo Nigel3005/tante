@@ -2,8 +2,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.db import models
 from django.contrib.auth.models import User
 
+
 # Create your models here.
-from Frontend import forms
 
 
 class Customer(models.Model):
@@ -38,38 +38,23 @@ class Product(models.Model):
 
     @property
     def imageURL(self):
-        if not hasattr(self, 'image') or not hasattr(self.image, 'url'):
-            return ''
-        else:
-            return self.image.url
+        return self.image.url if hasattr(self, 'image') and hasattr(self.image, 'url') else ''
 
     @property
     def image1URL(self):
-        if not hasattr(self, 'image1') or not hasattr(self.image1, 'url'):
-            return ''
-        else:
-            return self.image1.url
+        return self.image1.url if hasattr(self, 'image1') and hasattr(self.image1, 'url') else ''
 
     @property
     def image2URL(self):
-        if not hasattr(self, 'image2') or not hasattr(self.image2, 'url'):
-            return ''
-        else:
-            return self.image2.url
+        return self.image2.url if hasattr(self, 'image2') and hasattr(self.image2, 'url') else ''
 
     @property
     def image3URL(self):
-        if not hasattr(self, 'image3') or not hasattr(self.image3, 'url'):
-            return ''
-        else:
-            return self.image3.url
+        return self.image3.url if hasattr(self, 'image3') and hasattr(self.image3, 'url') else ''
 
     @property
     def image4URL(self):
-        if not hasattr(self, 'image4') or not hasattr(self.image4, 'url'):
-            return ''
-        else:
-            return self.image4.url
+        return self.image4.url if hasattr(self, 'image4') and hasattr(self.image4, 'url') else ''
 
     @property
     def total_products(self):
@@ -114,7 +99,8 @@ class Order(models.Model):
     @property
     def total_omzet(self):
         value = f'{round(sum(item.get_cart_total for item in Order.objects.all()), 2):,}'
-        return value.replace('.', '/').replace(',', '.').replace('/', ',')
+        # return value.replace('.', '/').replace(',', '.').replace('/', ',')
+        return value.translate({ord("."): ",", ord(","): "."})
 
     @property
     def bestseller_name(self):
@@ -256,3 +242,15 @@ class ShippingAddress(models.Model):
 
     def __str__(self):
         return self.address
+
+
+class contact(models.Model):
+    name = models.CharField(max_length=200, default=" ")
+    email = models.EmailField(max_length=200, default=" ")
+    bericht = models.TextField(max_length=200, default=" ")
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "Contact"

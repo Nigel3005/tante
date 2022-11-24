@@ -72,7 +72,7 @@ Message:
     contactForm.save()
 
     send_mail(data['sub'], MSG, 'webmail@user-service.nl', ['info@user-service.nl'],
-              fail_silently=False, auth_user='webmail@user-service.nl', auth_password='N@na2548NDW!')
+              fail_silently=False, auth_user='webmail@user-service.nl', auth_password='*****')
 
 
 def makeMailClient(mail):
@@ -84,7 +84,7 @@ Vriendelijke groet,
 User Service
 '''
     send_mail('Bevestiging WebForm User-Service', MSG, 'noreply@user-service.nl', [mail],
-              fail_silently=False, auth_user='noreply@user-service.nl', auth_password='N@na2548NDW!')
+              fail_silently=False, auth_user='noreply@user-service.nl', auth_password='*******')
 
 
 def contactView(request):
